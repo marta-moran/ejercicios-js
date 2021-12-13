@@ -84,13 +84,13 @@
             }
 
             for(let pez of peces)
-            if(isNaN(id)) {
-                idOk = false;
-                alert("ID no válido")
-            } else if (id == pez.id ) {
-                idOk = false;
-                alert("Ese ID ya está cogido");
-            }
+                if(isNaN(id)) {
+                    idOk = false;
+                    alert("ID no válido")
+                } else if (id == pez.id ) {
+                    idOk = false;
+                    alert("Ese ID ya está cogido");
+                }
 
             if (nombreEspecialesOk == true && nombreNumsOk == true && idOk == true) {
                 let nuevoPez = new Pez(nombre, id);
