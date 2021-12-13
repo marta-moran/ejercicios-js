@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button name="llenar-agua" value = "llenar-agua" onclick="agua()">Llenar agua</button><br><br>
+    <label for="">Nombre pez </label><input type="text" name="pez"><br><br>
+    <label for="">ID pez </label><input type="text" name="pez"><br><br>
+    <button name="crear-pez" value="crear-pez" onclick="crear()">Crear pez</button>
+    <button name="echar-comida" value = "echar-comida" onclick="comida()">Echar comida</button>
+    <script>
+
+        //variables pecera
+        var aguaDisponible= 0;
+        var aguaTope = 600;
+        var nuevaAgua;
+
+        //array de peces
+        var peces = [];
+
+        //variables DOM para crear peces
+        var nombre;
+        var id;
+
+        //comprobaciones
+        const numeros = "1234567890";
+        const cEspeciales = "!|·#%&()='¡^*,.:+@";
+
+        //comida
+        var alimento= false;
+
+
+        //función para llenar la pecera
+        function agua() {
+
+            if (aguaDisponible < 600) {
+
+                nuevaAgua = parseInt(prompt("¿Cuánta agua quieres echar a la pecera?"));
+                if (nuevaAgua < aguaTope) {
+                aguaDisponible += nuevaAgua;
+                alert("ahora hay " + aguaDisponible + "ml de agua en la pecera");
+                } else if (isNaN(nuevaAgua) || nuevaAgua == "") {
+                    alert("Por favor, introduce un numero")
+                } 
+                if (nuevaAgua > aguaTope) {
+                    alert("La  pecera solo tiene capacidad para " + aguaTope + "ml de agua");
+                }
+            }    
+        }
+
+        //función constructora de pez
+        function Pez(nombre, id) {
+            this.nombre = nombre;
+            this.id = id;
+            this.comida = alimento;
+        }
+
+        //funcion que comprueba si los datos son válidos, y si son crea y añade el pez al array.
+        function crear() {
+            nombre = document.getElementsByTagName('input')[0].value;
+            id = document.getElementsByTagName('input')[1].value;
+            let nombreEspecialesOk = true;
+            let nombreNumsOk = true;
+            let idOk = true;
+
+            if(aguaDisponible > 0) {
+
+                for(let i=0; i<cEspeciales.length; i++) {
+                if(nombre.includes(cEspeciales.charAt(i))) {
+                    alert("Nombre no válido");
+                    nombreEspecialesOk = false;
+                } 
+            }
+
+            for(let i = 0; i <numeros.length; i++ ) {
+                if(nombre.includes(numeros.charAt(i))) {
+                    alert("Nombre no válido");
+                    nombreNumsOk = false;
+                }
+            }
+
+            for(let pez of peces)
+            if(isNaN(id)) {
+                idOk = false;
+                alert("ID no válido")
+            } else if (id == pez.id ) {
+                idOk = false;
+                alert("Ese ID ya está cogido");
+            }
+
+            if (nombreEspecialesOk == true && nombreNumsOk == true && idOk == true) {
+                let nuevoPez = new Pez(nombre, id);
+                peces.push(nuevoPez);
+            }
+           
+            console.log(peces);
+            } else {
+                alert("No hay agua en la pecera, llénala antes de crear un pez");
+            }
+        }
+
+        function comida() {
+            let random =  Math.round (Math.random()*peces.length+1);
+            let alimento = false;
+
+            peces[random-1].comida = true;
+            
+        }
+    </script>
+</body>
+</html>
