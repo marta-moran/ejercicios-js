@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validando usuario y clave</title>
+</head>
+<body>
+    <label for="">Usuario: </label><input type="text" name="perfil" value=""><br><br>
+    <label for="">Clave: </label><input type="text" name="perfil" value=""><br><br>
+    <input type="button" value="Validar" onclick="accion(this.value)">   
+    <input type="button" value="Cancelar" onclick="accion(this.value)">
+<script>
+
+//constantes a comprobar
+  const minusculas = "abcdfghijklmnñopqrstuvwxyz";
+  const mayusculas = minusculas.toLocaleUpperCase();
+  const especiales = "!?¿¡/()&¬%$·#+^[]{}"
+  const numeros = "12345678910";
+
+//definicion de variables que capturaré en las funciones
+ // var usuario = document.getElementsByName("perfil")[0]; y en la funcion usuario = usario.value no funciona 
+ // var clave = document.getElementsByName("perfil")[1];
+
+function accion (valor){
+
+    switch (valor) {
+    case "Validar":
+        validarUsuario();
+        validarClave();
+        validarUsuarioyClave();
+        break;
+    case "Cancelar":
+        cancelar();
+        limpiar();
+        break;
+    }
+}
+
+function validarUsuario(){
+    
+    let usuario = document.getElementsByName("perfil")[0].value;
+    let especialesOk = true;
+    let mayusculasOk = true;
+
+    if (usuario == "") {
+        alert("Este campo no puede estar vacio")
+    }
+
+    //comprobar que NO contenga mayusculas, ni caracteres especiales
+    for (let i = 0; i < especiales.length; i++) {
+        for (let j = 0; j < mayusculas.length; j++) {
+            if(usuario.includes(especiales.charAt(i))) {
+                especialesOk = false;
+            }
+            if(usuario.includes(mayusculas.charAt(j))) {
+                    mayusculasOk = false;
+            }
+        }
+    }
+
+    /*console.log(mayusculasOk);
+    console.log(especialesOk);*/
+
+    //si devuelve true se puede hacer la validación de usuario 
+    if (especialesOk == true && mayusculasOk == true) {
+        return true;
+    }
+}
+
+function validarClave() {
+    let especialesOk = false;
+    let mayusculasOk = false;
+    let numeroOk = false;
+    let clave = document.getElementsByName("perfil")[1].value;
+
+    if (clave == ""){
+        alert("este campo no puede estar vacio")
+    }
+
+    for (let i = 0; i < mayusculas.length; i++) {
+        for (let j = 0; j < especiales.length; j++) {
+            for (let k = 0; k < numeros.length; k++) {
+                if (clave.includes(mayusculas.charAt(i))) {
+                    mayusculasOk = true;
+                }
+                if (clave.includes(especiales.charAt(j))) {
+                    especialesOk = true;
+                }
+                if(clave.includes(numeros.charAt(k))) {
+                    numeroOk = true;
+                }
+            }
+        }
+    }
+
+    /*console.log(mayusculasOk);
+    console.log(especialesOk);
+    console.log(numeroOk); */
+
+    //si devuelve true se puede hacer la validación de clave
+    if ( clave.length > 7 && mayusculasOk == true && especialesOk == true && numeroOk == true) {
+        return true;
+    }
+}
+
+function validarUsuarioyClave() {
+    if (validarUsuario() == true && validarClave() == true) {
+        alert("usuario creado correctamente")
+    } else {
+        alert("algo no fue bien")
+    }
+}
+
+function cancelar() {
+    alert("Estás seguro de que quieres salir?")
+}
+
+function limpiar() {
+   document.getElementsByName("perfil")[0].value = "";
+   document.getElementsByName("perfil")[1].value = "";
+}
+</script>
+</body>
+</html>
