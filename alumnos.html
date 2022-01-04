@@ -106,12 +106,18 @@ AL PULSAR LIMPIAR SE LIMPIAN LAS CAJAS -->
         function borrar() {
             let nombre = document.getElementById("nombre").value;
             let posicion;
+            let encontrado = false;
             for (let alumno of alumnos) {
                 if (nombre == alumno) {
                     posicion = alumnos.indexOf(alumno);
                     console.log(posicion);
                     alumnos.splice(posicion, 1);
+                    encontrado = true;
                 }
+            }
+
+            if (!encontrado) {
+                alert("No se puede eliminar a ese alumno/a porque no se ha encontrado en el array");
             }
             console.log(alumnos);
         }
