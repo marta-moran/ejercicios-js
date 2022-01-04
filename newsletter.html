@@ -1,0 +1,92 @@
+<!--Rellenar cajas de usuario, juego y descuento
+validar si los campos están rellenos, si usuario es caracter, si juego es caracter y si descuento es numérico.
+Si todo está correcto añadir los datos en un array con el botón añadir.
+Si se pulsa el botón generar se genera una newsletter en el textarea que sustituye USUARIO por usuario, JUEGO por juego
+y DESCUENTO por descuento.
+"Hola USUARIO: 
+Como regalo de bienvenida al club de gamers, queremos ofrecer un descuento del DESCUENTO % en el próximo 
+lanzamiento de tu interés JUEGO.
+Esperamos que lo disfrutes!
+Un saludo."
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-size: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 50px 0px 50px 600px;
+        }
+    </style>
+</head>
+<body>
+    <label for="">Nombre: </label>
+    <input type="text" name="ficha" id="usuario"><br><br>
+
+    <label for="">Juego: </label>
+    <input type="text" name="ficha" id="juego"><br><br>
+
+    <label for="">Descuento: </label>
+    <input type="text" name="ficha" id="descuento"><br><br><br>
+
+    <input type="button" name="boton" value="generar" onclick="generar()"><br><br><br>
+
+
+    <textarea name="ficha" id="text" cols="60" rows="20"></textarea>
+</body>
+
+<script>
+
+    var datos = [];
+
+    function Usuario(nombre, juego, descuento) {
+        this.nombre = nombre;
+        this.juego = juego;
+        this.descuento = descuento;
+    }
+
+    function generar() {
+        //captura de datos
+        let nombre = document.getElementsByName("ficha")[0].value;
+        let juego = document.getElementsByName("ficha")[1].value;
+        let descuento = document.getElementsByName("ficha")[2].value;
+        let msg = "Hola " + nombre + ":\nComo regalo de bienvenida al club de gamers, queremos ofrecer un descuento del " + descuento + " % en el próximo\nlanzamiento de tu interés " + juego + ". Esperamos que lo disfrutes!"
+
+        let validarChars = true;
+        let validarNums = true;
+
+        //comprobaciones
+        if ((nombre == "") || (!isNaN(nombre)) || (juego == "") || (!isNaN(juego))) {
+            validarChars = false
+        } 
+
+        if (isNaN(descuento) || descuento == "") {
+            validarNums = false;
+        } 
+
+        if (validarChars == true && validarNums == true) {
+            document.getElementById("text").value = msg;
+            let newUser = new Usuario (nombre, juego, descuento);
+            datos.push(newUser);
+            console.log(datos);
+        } else {
+            alert("Algo no fue bien");
+            limpiar();
+        }
+        
+        limpiar();
+    }
+
+    function limpiar() {
+        for(let i=0; i<3; i++) {
+            document.getElementsByName("ficha")[i].value = ""
+        }
+    }
+
+</script>
+</html>

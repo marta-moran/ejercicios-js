@@ -1,0 +1,133 @@
+<!-- PROGRAMA QUE ALMACENA ALUMNOS EN UN ARRAY AL PULSAR AÑADIR,
+AL ALCANZAR LA POSICIÓN 2 SE PREGUNTA POR PROMPT EN QUÉ POSICIÓN SE QUIERE ALMACENAR EL ALUMNO
+SI EN INICIO, FINAL O NUMERO Y SE CAMBIA A LA POSICIÓN CORRESPONDIENTE EN EL ARRAY.
+AL PULSAR BUSCAR SE BUSCA EL ALUMNO Y SE DICE SI EXISTE
+AL PULSAR ELIMINAR SE ELIMINA EL ALUMNO SOLICITADO
+AL PULSAR VISUALIZAR SE MUESTRA EN EL TEXTAREA TODOS LOS DATOS
+AL PULSAR LIMPIAR SE LIMPIAN LAS CAJAS -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="cjnombre" id="nombre" /><br><br>
+    </div>
+    <div>
+        <label for="visual">Visualizar:</label><br>
+        <textarea name="cjvisualizo" id="visual" rows=15 cols=30></textarea><br><br>
+
+    </div>
+    <div>
+        <input type="button" value="Añadir" onclick="accion(this.value);" />
+        <input type="button" value="Buscar" onclick="accion(this.value);" />
+        <input type="button" value="Eliminar" onclick="accion(this.value);" />
+        <input type="button" value="Visualizar" onclick="accion(this.value);" /><br><br>
+    </div>
+    <div>
+        <input type="button" value="Limpiar" onclick="accion(this.value);" />
+    </div>
+    <script>
+        var alumnos = [];
+
+        function accion(valor) {
+            switch (valor) {
+                case "Añadir":
+                    add();
+                    break;
+                case "Buscar":
+                    search();
+                    break;
+                case "Eliminar":
+                    borrar();
+                    break;
+                case "Limpiar":
+                    limpiar();
+                    break;
+                case "Visualizar":
+                    vista();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function add() {
+            let nombre = document.getElementById("nombre").value;
+            let posicion;
+
+            if (nombre == "" || !isNaN(nombre)) {
+                alert("Nombre no válido");
+            } else {
+                posicion = parseInt(prompt("¿En qué posicion quieres meter al alumno?\n1. Al principio\n2. Posicion concreta (deberás indicar el numero)\n3. Al final"));
+                switch (posicion) {
+                    case 1:
+                        alumnos.unshift(nombre)
+                        break;
+                    case 2:
+                        posicion = parseInt(prompt("Indica la posición el array"));
+                        alumnos.splice(posicion, 0, nombre);
+                        break;
+                    case 3:
+                        alumnos.push(nombre);
+                        console.log(alumnos);
+                    default:
+                        break;
+                }
+            }
+
+            console.log(alumnos);
+            limpiar();
+        }
+
+        function search() {
+            let nombre = document.getElementById("nombre").value;
+            let encontrado = false;
+            for (let alumno of alumnos) {
+                if (nombre == alumno) {
+                    document.getElementById("visual").value = "El alumno/a " + alumno + " se encuentra en la posición " + alumnos.indexOf(nombre) + " del array";
+                    encontrado = true;
+                }
+            }
+
+            if (!encontrado) {
+                document.getElementById("visual").value = "Ese alumno/a no se encuentra en el array, puedes añadirlo."
+                document.getElementById("nombre").value = "";
+            }
+        }
+
+        function borrar() {
+            let nombre = document.getElementById("nombre").value;
+            let posicion;
+            for (let alumno of alumnos) {
+                if (nombre == alumno) {
+                    posicion = alumnos.indexOf(alumno);
+                    console.log(posicion);
+                    alumnos.splice(posicion, 1);
+                }
+            }
+            console.log(alumnos);
+        }
+
+        function vista() {
+            for (let alumno of alumnos) {
+                document.getElementById("visual").value += alumno + "\n";
+            }
+        }
+
+        function limpiar() {
+            document.getElementById("nombre").value = "";
+            document.getElementById("visual").value = "";
+        }
+
+    </script>
+</body>
+
+</html>
