@@ -19,17 +19,15 @@
   const especiales = "!?¿¡/()&¬%$·#+^[]{}"
   const numeros = "12345678910";
 
-//definicion de variables que capturaré en las funciones
- // var usuario = document.getElementsByName("perfil")[0]; y en la funcion usuario = usario.value no funciona 
- // var clave = document.getElementsByName("perfil")[1];
 
 function accion (valor){
-
+    let usuario = document.getElementsByName("perfil")[0];
+    let  clave = document.getElementsByName("perfil")[1];
     switch (valor) {
     case "Validar":
-        validarUsuario();
-        validarClave();
-        validarUsuarioyClave();
+        validarUsuario(usuario);
+        validarClave(clave);
+        validarUsuarioyClave(usuario, clave);
         break;
     case "Cancelar":
         cancelar();
@@ -38,11 +36,12 @@ function accion (valor){
     }
 }
 
-function validarUsuario(){
+function validarUsuario(usuario){
     
-    let usuario = document.getElementsByName("perfil")[0].value;
+    usuario = usuario.value;
     let especialesOk = true;
     let mayusculasOk = true;
+  
 
     if (usuario == "") {
         alert("Este campo no puede estar vacio")
@@ -69,11 +68,11 @@ function validarUsuario(){
     }
 }
 
-function validarClave() {
+function validarClave(clave) {
     let especialesOk = false;
     let mayusculasOk = false;
     let numeroOk = false;
-    let clave = document.getElementsByName("perfil")[1].value;
+    clave = clave.value;
 
     if (clave == ""){
         alert("este campo no puede estar vacio")
@@ -105,8 +104,8 @@ function validarClave() {
     }
 }
 
-function validarUsuarioyClave() {
-    if (validarUsuario() == true && validarClave() == true) {
+function validarUsuarioyClave(usuario, clave) {
+    if (validarUsuario(usuario) == true && validarClave(clave) == true) {
         alert("usuario creado correctamente")
     } else {
         alert("algo no fue bien")
