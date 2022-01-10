@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Científicos</title>
+</head>
+<body>
+        <table>
+            <tr><td>    
+        <table>
+            <tr><td><label for="">Nombre: </label></td><td><input type="text" name="ficha"></td></tr>     
+            <tr><td><label for="">Apellidos</label></td><td><input type="text" name="ficha"></td></tr>
+            <tr><td><label for="">DNI: </label></td><td><input type="text" name="ficha" disabled></td></tr> <!--si está desabilitado no lo cojo en añadir ni lo paso x el constructor-->
+            <tr><td><label for="">Fecha Nacimiento: </label></td><td><input type="text"  id="born"></td></tr>
+            <tr><td><label for="">Fecha Muerte: </label></td><td><input type="text" id="dead"></td></tr>
+        </table></td><td><img src="ordenador.jpg" width="143" height="144" alt=""></td></tr>
+        <tr>
+            <td><input type="button" value="AÑADIR" style="width:40mm;height: 7mm;" onclick="anadir();"></td>
+            <td><input type="button" value="BUSCAR" style="width: 40mm;height: 7mm;" onclick="buscar();"></td>
+        </tr>
+    </table>
+<h3>Principal aportación al mundo</h3>
+<textarea cols="30" rows="5" style="width: 116mm;"></textarea>
+    <script>
+
+        var cientificos = new Map();
+        function Cientifico(nombre, apellidos, nacimiento, muerte, aportacion) {
+            this.nombre = nombre;
+            this.apellidos = apellidos;
+            this.nacimiento = nacimiento;
+            this.muerte = muerte;
+            this.aportacion = aportacion;
+
+            //para generar el dni
+            let inicio = nombre.slice(0, 1); //primera letra del nombre
+            let final = apellidos.slice(-3); //tres últimas del apellido
+            let random = Math.round (Math.random()*9+1); //número del 1 al 10
+            this.dni = inicio + random + final;
+        }
+
+        function anadir() {
+            //cojo los elementos del DOM
+            let nombre = document.getElementsByName("ficha")[0].value;
+            let apellidos = document.getElementsByName("ficha")[1].value;
+            let nacimiento = document.getElementById("born").value;
+            let muerte = document.getElementById("dead").value;
+            let aportacion = document.getElementsByTagName("textarea")[0].value;
+
+            let newCientifico = new Cientifico(nombre, apellidos, nacimiento, muerte, aportacion);
+            cientificos.set(nombre, newCientifico); //añadir valores en el mapa. Se debe dar una clave (nombre, id...) y el objeto que se quiera meter
+            console.log(cientificos);
+
+            //limpio las cajas
+            document.getElementsByName("ficha")[0].value = "";
+            document.getElementsByName("ficha")[1].value = "";
+            document.getElementsByName("ficha")[2].value = "";
+            document.getElementById("born").value = "";
+            document.getElementById("dead").value = "";
+            document.getElementsByTagName("textarea")[0].value = "";
+            document.images[0].src = "ordenador.jpg"
+
+        }
+
+        //método has: busca si un elemento existe en el mapa por la clave
+        //get extrae la clave del mapa, útil para guardarla en una variable y operar así con ella
+        function buscar() {
+            let nombre = document.getElementsByName("ficha")[0].value;
+            if (cientificos.has(nombre)) {
+                let keyCientifico = cientificos.get(nombre); //clave del mapa para operar. El metodo get extrae la clave
+                document.getElementsByName("ficha")[0].value = keyCientifico.nombre; //con la nueva variable que corresponde a la clave, doy valores a las cajas
+                document.getElementsByName("ficha")[1].value = keyCientifico.apellidos;
+                document.getElementsByName("ficha")[2].value  = keyCientifico.dni;
+                document.getElementById("born").value = keyCientifico.nacimiento;
+                document.getElementById("dead").value = keyCientifico.muerte;
+                document.getElementsByTagName("textarea")[0].value = keyCientifico.aportacion;
+
+                let incial = nombre.slice(0, 1);
+
+                document.images[0].src = incial + keyCientifico.apellidos + ".jpg"
+                console.log(keyCientifico.dni);
+
+            } else {
+                alert("Ese científico no está en la base de datos")
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DAW</title>
+    </head>
+    <body>
+        <textarea id="cajatexto" cols="60" rows="10"></textarea><br>
+        <script>
+
+            var mapa = new Map();
+            var modulos = ["Diseño de Interfaces", "Desarrollo Web en Entorno Servidor", "Desarrollo Web en Entorno Cliente", "Empresa", "Inglés", "Despliegue Aplicaciones Web"]
+            var arraySiglas = []; 
+            var contenido = "";
+
+            //RELLENO EL MAPA CON UN BUCLE FOR (I CLAVE). LA J SOLO SIRVE PARA RECORRER EL ARRAY MÓDULOS
+            function crearMapa() {
+                for (let i = 0; i < modulos.length; i++) {
+                    for (let j = 0; j < modulos.length; j++) {
+                        mapa.set(i, modulos[i]);
+                    }
+                }
+            }
+        
+            crearMapa();
+            let seleccion = parseInt(prompt("¿Cuál de las siguientes acciones quieres realizar?\n1.Muestra cuántos módulos hay almacenados \n2.Muestra el contenido de la estructura\n3.Devuelve las abreviaturas de todos los módulos guardados\n4.Consulta si está el módulo 'DAW'(sí está se eliminará)"));
+
+                switch (seleccion) {
+                    case 1:
+                        mostrarModulos();
+                        break;
+                    case 2:
+                        mostrarMapa();
+                        break;
+                    case 3:
+                        siglas();
+                        break;
+                    case 4:
+                        //no funciona porque no reconoce el array arraySiglas como global y siempre está a 0. 
+                        buscar()
+                        break;
+                    default:
+                        error();
+                        break;
+                }
+
+            function mostrarModulos(){
+                for(let indice of modulos){
+                    contenido += indice + "\n";
+                    document.getElementsByTagName("textarea")[0].value = contenido + "\nMÓDULOS TOTALES: " + mapa.size;
+                }
+            }
+
+            function mostrarMapa() {
+                let titulo = "MÓDULOS";
+                for (let i = 0; i < modulos.length; i++) {
+                    for (let j=0; j < modulos.length; j++) {
+                        contenido += "clave:" + i + " valor:" + modulos[i] + "\n";
+                        document.getElementsByTagName("textarea")[0].value = contenido;
+                        //document.write(contenido) pondría un <br> en la línea 64;
+                        break;
+                    }
+                }
+            }
+
+            function siglas() {
+                let arraySiglasLocal = [];
+                let arrayModulos = [];
+                
+                console.log(modulos.length);
+             
+                for (let i = 0; i < modulos.length; i++) {
+                    arrayModulos.push(modulos[i].split(" "));  
+                }
+
+                console.log(arrayModulos);
+
+                for (let i = 0; i < arrayModulos.length; i++) {
+                    let siglas = "";
+                    for (let j = 0; j < arrayModulos[i].length; j++) {
+                        siglas+=arrayModulos[i][j].charAt(0);
+                    }
+                    arraySiglasLocal.push(siglas);
+                }
+
+                //Aquí sería el apartado 4 del ejercicio. Se podría hacer con arraySiglasLocal, pero lo dejo con arraySiglas para que s evea claro q se elimina DAW 
+                console.log(arraySiglasLocal);
+                arraySiglas = arraySiglasLocal.slice();
+                
+                let valor = arraySiglas.find(function(element) {
+                return element == "DAW";
+                })
+
+                if(valor == "DAW") {
+                    arraySiglas.pop(valor);
+                }
+                console.log(arraySiglas);
+            }
+
+            /*function buscar() {  
+               
+                console.log(arraySiglas);
+
+                let valor = arraySiglas.find(function(element) {
+                return element == "DAW";
+                })
+
+                if(valor == "DAW") {
+                    arraySiglas.pop(valor);
+                }
+                console.log(arraySiglas);
+            }*/
+
+            function error () {
+                contenido = "Solo puedes introducir un número de los que existan en el menú. "
+                document.getElementsByTagName("textarea")[0].value = contenido;
+            }
+
+        </script>
+    </body>
+    </html>
