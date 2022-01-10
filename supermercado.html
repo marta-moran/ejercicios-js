@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace
+        }
+
+        h1 {
+            font-size: 30px;
+            color: rgb(180, 104, 250);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SUPERMERCADOS %DIA%</h1>
+    <label for="">Nombre: </label>
+    <input type="text" name="producto" id="nombre"><br><br>
+
+    <label for="">ID: </label>
+    <input type="text" name="producto" id="id" disabled><br><br>
+
+    <label for="">Precio: </label>
+    <input type="text" name="producto" id="precio"><br><br>
+    <img src="https://libbys.es/wordpress/wp-content/uploads/2014/12/multifrutas.jpg" width="143" height="144"><br><br>
+    <input type="button" value="add" onclick="accion(this.value)">
+    <input type="button" value="search" onclick="accion(this.value)">
+    <input type="button" value="delete" onclick="accion(this.value)">
+    <input type="button" value="visualizar" onclick="accion(this.value)">
+    <input type="button" value="terminar" onclick="terminar()"><br><br>
+    <textarea id="visual" cols="30" rows="7"></textarea>
+
+    <script>
+        var productos = [];
+
+        function Producto(nombre, precio) {
+            this.nombre = nombre;
+            this.precio = precio;
+            let random = Math.round(Math.random() * 29 + 1)
+            let iniciales = nombre.slice(0, 3);
+            this.id = random + iniciales;
+        }
+
+        function accion(boton) {
+            switch (boton) {
+                case "add":
+                    add();
+                    break;
+                case "search":
+                    search();
+                    break;
+                case "delete":
+                    borrar();
+                    break;
+                case "visualizar":
+                    visualizar();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function add() {
+            let nombre = document.getElementsByName("producto")[0].value;
+            let precio = document.getElementsByName("producto")[2].value;
+
+            if (nombre == "" || !isNaN(nombre) || precio == "" || isNaN(precio)) {
+                alert("Datos no válidos")
+            } else {
+                let nuevoProducto = new Producto(nombre, precio);
+                productos.push(nuevoProducto);
+            }
+            limpiar();
+        }
+
+        function search() {
+            let nombre = document.getElementsByName("producto")[0].value;
+            let encontrado = false;
+
+            for (let producto of productos) {
+                if (nombre == producto.nombre) {
+                    document.getElementsByName("producto")[0].value = producto.nombre;
+                    document.getElementsByName("producto")[1].value = producto.id;
+                    document.getElementsByName("producto")[2].value = producto.precio;
+                    encontrado = true;
+
+                    document.images[0].src = "https://www.feelcats.com/wp-content/uploads/2015/07/gatito-siames.jpg";
+                }
+            }
+
+            if (!encontrado) {
+                alert("No tenemos ese producto en nuestro supermercado");
+            }
+        }
+
+
+        function terminar() {
+            let pregunta = prompt("¿Seguro que quieres salir? introduce sí o no");
+
+            if (pregunta == "si" || pregunta == "sí") {
+                document.write("¡Adiós! Esperamos que vuelvas pronto");
+            }
+        }
+
+        function visualizar() {
+            document.getElementById("visual").value = "PRODUCTOS EN EL SUPERMERCADO\n"
+            for (let producto of productos) {
+                document.getElementById("visual").value+=producto.nombre + "\t" + producto.precio + "€\n";
+            }
+        }
+
+        function limpiar() {
+            document.getElementsByName("producto")[0].value = "";
+            document.getElementsByName("producto")[1].value = "";
+            document.getElementsByName("producto")[2].value = "";
+        }
+
+        function borrar() {
+            let seleccion = document.getElementsByName("producto")[0].value
+            let posicion;
+            for(let producto of productos) {
+                if(seleccion == producto.nombre) {
+                    posicion = productos.indexOf(producto);
+                    productos.splice(posicion, 1);
+                }
+            }
+            console.log(productos);
+        }
+    </script>
+</body>
+
+</html>

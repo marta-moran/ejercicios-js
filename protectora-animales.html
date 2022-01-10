@@ -1,0 +1,151 @@
+<!--Si el animal NO tiene adoptante, se podrá adoptar
+    Dependiendo de la especie, se le asignara una foto u otra -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protectora Patitas</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Base de datos de la <b>protectora Patitas</b></h1>
+    <table>
+        <tr><td>    
+    <table>
+        <tr><td><label for="">Nombre: </label></td><td><input type="text" name="ficha"></td></tr>     
+        <tr><td><label for="">Especie: </label></td><td><input type="text" name="ficha"></td></tr>
+        <tr><td><label for="">ID: </label></td><td><input type="text" name="ficha" disabled></td></tr> <!--si está desabilitado no lo cojo en añadir ni lo paso x el constructor-->
+        <tr><td><label for="">Fecha Nacimiento: </label></td><td><input type="text"  id="born"></td></tr>
+        <tr><td><label for="">Nombre adoptante: </label></td><td><input type="text" id="adoptante"></td></tr>
+    </table></td><td><img src="https://image.freepik.com/vector-gratis/gato-pata-gatito-huella-corazon-san-valentin_71328-543.jpg" width="143" height="144" alt=""></td></tr>
+    <tr>
+        <td><input type="button" value="AÑADIR" style="width:40mm;height: 7mm;" onclick="add();"></td>
+        <td><input type="button" value="BUSCAR" style="width: 40mm;height: 7mm;" onclick="search();"></td>
+        <td><input type="button" value="ADOPTAR" style="width: 40mm;height: 7mm;" onclick="adoptar();"></td>
+    </tr>
+    </table>
+    <h2>Características</h2>
+    <textarea cols="30" rows="5" style="width: 116mm;"></textarea>
+
+    <script>
+        var animales = [];
+
+
+        function Animal(nombre, especie, id, nacimiento, adoptante, caracteristicas) {
+            this.nombre = nombre;
+            this.especie = especie;
+            this.nacimiento = nacimiento;
+            this.adoptante = adoptante;
+            this.caracteristicas = caracteristicas;
+            
+            //el id se crea a partir del nombre del animal + un random + nombre del adoptante
+            let inicial = this.nombre.charAt(0);
+            let siguiente_inicial = this.adoptante.slice(-2);
+            this.id = inicial + siguiente_inicial + this.nacimiento;
+
+        }
+
+        let mascota1 = new Animal ("Tambor", "conejo", "T2009", "2009", "", "conejo de orejas largas");
+        let mascota2 = new Animal ("Versace", "conejo", "V2016", "2016", "", "conejo blanco y negro");
+        let mascota3 = new Animal ("Tomás", "perro", "T2017", "2017", "", "bichón maltes sano");
+        let mascota4 = new Animal ("Garritas", "gato", "G2019", "2019", "", "gato siamés sano");
+
+        animales.push(mascota1);
+        animales.push(mascota2);
+        animales.push(mascota3);
+        animales.push(mascota4);
+
+        
+
+        function add() {
+            let nombre = document.getElementsByName("ficha")[0].value;
+            let especie = document.getElementsByName("ficha")[1].value;
+            let id = document.getElementsByName("ficha")[2].value;
+            let nacimiento = document.getElementById("born").value;
+            let adoptante = document.getElementById("adoptante").value;
+            let caracteristicas = document.getElementsByTagName("textarea")[0].value;
+
+            let nuevaMascota = new Animal (nombre, especie, id, nacimiento, adoptante, caracteristicas);
+            animales.push(nuevaMascota);
+            console.log(animales)
+
+            //limpio:
+            limpiar();
+        }
+
+        function search() {
+            //se busca por nombre del animal
+            let nombre = document.getElementsByName("ficha")[0].value;
+            let existe = false;
+
+            for (let animal of animales) {
+                if(nombre == animal.nombre) {
+                    document.getElementsByName("ficha")[0].value = animal.nombre;
+                    document.getElementsByName("ficha")[1].value = animal.especie;
+                    document.getElementsByName("ficha")[2].value = animal.id
+                    document.getElementById("born").value = animal.nacimiento;
+                    document.getElementById("adoptante").value = animal.adoptante;
+                    document.getElementsByTagName("textarea")[0].value = animal.caracteristicas; 
+                    switch (animal.especie) {
+                        case "gato":
+                            document.images[0].src = "https://ca-times.brightspotcdn.com/dims4/default/87be6da/2147483647/strip/true/crop/1970x1108+39+0/resize/1200x675!/quality/90/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F12%2Fa5%2F79e097ccf62312d18a025f22ce48%2Fhoyla-recuento-11-cosas-aman-gatos-top-001";
+                            break;
+                        case "conejo":
+                            document.images[0].src = "https://static.maskokotas.com/blog/wp-content/uploads/2020/12/hare-4375952_1920-1.jpg";
+                            break;
+                        case "perro":
+                            document.images[0].src = "https://t2.uc.ltmcdn.com/images/9/8/3/como_cuidar_a_un_shiba_inu_42389_orig.jpg";
+                        default:
+                            break;
+                    }
+                    existe = true;
+                    break;
+                }
+            }
+
+            if (!existe) {
+                alert("ese animal no está en nuestra protectora");
+                limpiar();
+            }
+        }
+
+        function adoptar() {
+            let seleccion = document.getElementsByName("ficha")[0].value;
+            let posicion;
+            
+            let cajatexto = document.getElementsByTagName("textarea")[0];
+            cajatexto.value = "SOLO SE PODRÁN ADOPTAR LOS ANIMALES QUE NO TENGAN ADOPTANTE. ANIMALES DISPONIBLES PARA ADOPCIÓN\n"
+            
+            for (let animal of animales) {
+                if(animal.adoptante == "") {
+                    cajatexto.value += animal.nombre + "\n";
+                }
+            } 
+        
+            for (let animal of animales) {
+                if (seleccion == animal.nombre) {
+                    alert("Has adoptado a " + animal.nombre + " muchas gracias por darle un nuevo hogar :)")
+                    posicion = animales.indexOf(animal);
+                    animales.splice(posicion, 1);
+                    limpiar();
+                }
+            }  
+        }
+
+        
+        function limpiar() {
+            for ( let i = 0; i < 5; i++) {
+                document.getElementsByTagName("input")[i].value = "";
+            }
+            document.getElementsByTagName("textarea")[0].value = "";
+        }
+    </script>
+</body>
+</html>
