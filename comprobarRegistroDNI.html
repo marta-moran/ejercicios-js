@@ -18,6 +18,7 @@
     <!--Debe contener c.especiales, un número, mayúsculas-->
     <label for="">DNI: </label><input type="text" name="perfil" value=""><br><br>
     <!--Debe contener 8 letras y un número-->
+    <textarea cols="60" rows="30"></textarea><br><br>
     <input type="button" value="Validar" onclick="accion(this.value)">
     <input type="button" value="Cancelar" onclick="accion(this.value)">
 
@@ -38,9 +39,10 @@
                     validarNameSurName(nombre, apellido);
                     validarDireccion(direccion);
                     validarDNI(dni);
+                    validacionCompleta(nombre, apellido, direccion, dni);
                     break;
                 case "Cancelar":
-
+                    salir();
                     break;
                 default:
                     break;
@@ -100,6 +102,7 @@
         }
 
         function validarDireccion(direccion) {
+
             //El primer caracter debe ser mayuscula. Además puede contener más. Debe tener un caracter especial y un número.
             direccion = direccion.value;
             let nums = false;
@@ -107,6 +110,9 @@
             let letras = false;
             let mayusPrimerCaracter = false;
 
+            if (direccion == "") {
+                alert("El campo dirección no puede estar vació")
+            }
 
             //compruebo que haya números en la dirección
             for (let i = 0; i < numeros.length; i++) {
@@ -152,11 +158,17 @@
         function validarDNI(dni) {
             //Debe tener una longitud de 9 caracteres. El último debe ser una letra.
             dni = dni.value;
+            let dniNums;
             let longitud = false;
             let mayus = false;
-            let nums = false;
+            let numsMins = false;
+            let numsMayus = false
+            let dniOk = false;
 
-            console.log(dni[8])
+            if (dni == "") {
+                alert("El campo DNI no puede estar vació")
+            }
+
 
             if (dni.length == 9) {
                 longitud = true;
@@ -167,10 +179,55 @@
                         break;
                     }
                 }
+                dniNums = dni.slice(0, 8);
+                for (let i = 0; i < minusculas.length; i++) {
+                    for (let j = 0; j < mayusculas.length; j++) {
+                        if (dniNums.includes(minusculas.charAt(i))) {
+                            numsMins = true;
+                            break;
+                        }
+                        if (dniNums.includes(mayusculas.charAt(i))) {
+                            numsMayus = true;
+                        }
+                    }
+                }
+                console.log(numsMins);
+                console.log(numsMayus);
             } else {
-                console.log("longitud inválida")
+                console.log("longitud inválida");
             }
 
+            if (!numsMins && !numsMayus && longitud) {
+                dniNums = dniNums + dni[8];
+                console.log(dni);
+                dniOk = true;
+                return true;
+            }
+        }
+
+        function validacionCompleta(nombre, apellido, direccion, dni) {
+            if (validarNameSurName(nombre, apellido) == true && validarDireccion(direccion) == true && validarDNI(dni) == true) {
+                alert("Registro completo satisfactoriamente :)")
+                document.getElementsByTagName("textarea")[0].value += "REGISTRO DE UNA PERSONA\nNombre: " + nombre.value + "\nApellido: " + apellido.value + "\nDirección: " + direccion.value + "\nDNI: " + dni.value + "\n\n";
+                for(let i = 0; i<4; i++) {
+                document.getElementsByTagName("input")[i].value = "";
+                }
+            } else {
+                alert("Algo fue mal")
+            }
+        }
+
+        function salir() {
+                
+            if(confirm("¿Seguro que quieres cancelar?")){
+                alert("¡Adiós!");
+                for(let i = 0; i<4; i++) {
+                document.getElementsByTagName("input")[i].value = "";
+                }
+            } else {
+                document.getElementsByTagName("textarea")[0].value = "";
+                document.getElementsByTagName("textarea")[0].value += "Por favor, rellena los campos";
+            }
         }
     </script>
 </body>
