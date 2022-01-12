@@ -123,12 +123,17 @@
 
         function borrar() {
             let seleccion = document.getElementsByName("producto")[0].value
+            let encontrado = false;
             let posicion;
             for(let producto of productos) {
                 if(seleccion == producto.nombre) {
                     posicion = productos.indexOf(producto);
                     productos.splice(posicion, 1);
+                    encontrado = true;
                 }
+            }
+            if(!encontrado) {
+                alert("Ese producto no está disponible en el supermercado");
             }
             console.log(productos);
         }

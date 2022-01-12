@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Registro DNI:</h1>
+    <label for="">Nombre: </label><input type="text" name="perfil" value=""><br><br>
+    <!--Debe contener 2 mayúsculas-->
+    <label for="">Apellido: </label><input type="text" name="perfil" value=""><br><br>
+    <!--Debe contener 2 mayúsculas-->
+    <label for="">Dirección: </label><input type="text" name="perfil" value=""><br><br>
+    <!--Debe contener c.especiales, un número, mayúsculas-->
+    <label for="">DNI: </label><input type="text" name="perfil" value=""><br><br>
+    <!--Debe contener 8 letras y un número-->
+    <input type="button" value="Validar" onclick="accion(this.value)">
+    <input type="button" value="Cancelar" onclick="accion(this.value)">
+
+    <script>
+
+        const minusculas = "abcdfghijklmnñopqrstuvwxyz";
+        const mayusculas = minusculas.toLocaleUpperCase();
+        const especiales = "!?¿¡/()&¬%$·#+^[]{}ªº,"
+        const numeros = "12345678910";
+
+        function accion(valor) {
+            let nombre = document.getElementsByName("perfil")[0];
+            let apellido = document.getElementsByName("perfil")[1];
+            let direccion = document.getElementsByName("perfil")[2];
+            let dni = document.getElementsByName("perfil")[3];
+            switch (valor) {
+                case "Validar":
+                    validarNameSurName(nombre, apellido);
+                    validarDireccion(direccion);
+                    validarDNI(dni);
+                    break;
+                case "Cancelar":
+
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function validarNameSurName(nombre, apellido) {
+            //no puede contener números ni letras. El primer caracter del nombre y apellido debe ser una mayúscula.
+
+            nombre = nombre.value;
+            apellido = apellido.value;
+
+            let nums = true;
+            let cespeciales = true;
+            let mayus = false;
+
+            //compruebo que los campos esten rellenos
+            if (nombre == "" || apellido == "") {
+                alert("El campo nombre/apellido no puede estar vacio")
+            }
+
+            //compruebo que el nombre y el apellido no contengan números. Si contiene el booleano cambia a false.
+            for (let i = 0; i < numeros.length; i++) {
+                if (nombre.includes(numeros.charAt(i)) || apellido.includes(numeros.charAt(i))) {
+                    console.log("no puede contener numeros");
+                    nums = false;
+                    break;
+                }
+            }
+
+            //compruebo que el nombre y el apellido no contengan caracteres especiales. Si contiene el booleano cambia a false.
+            for (let i = 0; i < especiales.length; i++) {
+                if (nombre.includes(especiales.charAt(i)) || apellido.includes(especiales.charAt(i))) {
+                    console.log("no puede contener c.especiales");
+                    cespeciales = false;
+                    break;
+                }
+            }
+
+            //compruebo que el nombre y el apellido contengan en su primer caracter una letra mayúscula. Si es correcto cambio el booleano a true.
+            for (let i = 0; i < mayusculas.length; i++) {
+                if (nombre[0].includes(mayusculas.charAt(i)) && apellido[0].includes(mayusculas.charAt(i))) {
+                    mayus = true;
+                    break;
+                }
+            }
+            console.log(nums)
+            console.log(cespeciales)
+            console.log(mayus)
+
+
+            //si todas las comprobaciones son correctas retorno un true
+            if (nums == true && cespeciales == true && mayus == true) {
+                alert("nombre y apellido válido");
+                return true;
+            }
+        }
+
+        function validarDireccion(direccion) {
+            //El primer caracter debe ser mayuscula. Además puede contener más. Debe tener un caracter especial y un número.
+            direccion = direccion.value;
+            let nums = false;
+            let cespeciales = false;
+            let letras = false;
+            let mayusPrimerCaracter = false;
+
+
+            //compruebo que haya números en la dirección
+            for (let i = 0; i < numeros.length; i++) {
+                if (direccion.includes(numeros.charAt(i))) {
+                    console.log("ok");
+                    nums = true;
+                    break;
+                }
+            }
+            //compruebo que haya caracteres especiales en la dirección
+            for (let i = 0; i < especiales.length; i++) {
+                if (direccion.includes(especiales.charAt(i))) {
+                    console.log("ok cespeciales");
+                    cespeciales = true;
+                    break;
+                }
+            }
+
+            //compruebo que haya letras, es decir, que el usuario no haya metido solo números o caracteres especiales
+            for (let i = 0; i < minusculas.length; i++) {
+                if (direccion.includes(minusculas.charAt(i))) {
+                    console.log("ok minusculas");
+                    letras = true;
+                    break;
+                }
+            }
+
+            //compruebo que la primera letra sea mayúscula y que además contenga más
+            for (let i = 0; i < mayusculas.length; i++) {
+                if (direccion[0].includes(mayusculas.charAt(i))) {
+                    console.log("ok primera mayuscula");
+                    mayusPrimerCaracter = true;
+                    break;
+                }
+            }
+
+            if (nums == true && cespeciales == true && letras == true && mayusPrimerCaracter == true) {
+                alert("direccion valida");
+                return true;
+            }
+        }
+
+        function validarDNI(dni) {
+            //Debe tener una longitud de 9 caracteres. El último debe ser una letra.
+            dni = dni.value;
+            let longitud = false;
+            let mayus = false;
+            let nums = false;
+
+            console.log(dni[8])
+
+            if (dni.length == 9) {
+                longitud = true;
+                for (let i = 0; i < mayusculas.length; i++) {
+                    if (dni[8].includes(mayusculas.charAt(i))) {
+                        console.log("ok mayuscula");
+                        mayus = true;
+                        break;
+                    }
+                }
+            } else {
+                console.log("longitud inválida")
+            }
+
+        }
+    </script>
+</body>
+
+</html>
