@@ -1,0 +1,27 @@
+<!--A partir del código HTMLproporcionado, desarrollar el código que permita añadir un
+elemento de tipo input y cuyo texto inicial sea “HOLA MUNDO”.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creando elementos y atributos</title>
+</head>
+<body>
+    <div id="contenedor">
+        <button onclick="crearInput()">Inténtalo</button>
+    </div>
+    <script>
+        function crearInput() {
+            let element = document.createElement("input"); //creo el elemento input
+            let att =  document.createAttribute("placeholder") //creo su atributo placeholder
+            att.value = "HOLA MUNDO"; //doy valor al placeholder
+
+            element.setAttributeNode(att); //añado el atributo al input
+            document.body.appendChild(element); //lo incorporo al documento
+        }
+        
+    </script>
+</body>
+</html>

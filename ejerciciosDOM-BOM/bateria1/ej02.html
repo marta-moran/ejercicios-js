@@ -1,0 +1,31 @@
+<!--Obtener el valor del atributo ‘onclick’ del elemento botón. Para ello se utilizará uno de los  métodos DOM que 
+permiten identificar un elemento dentro de un tipo de elemento html.
+
+Segundo, se utilizará el método attributes y métodos que permitan recuperar el nombre del atributo buscado. 
+El valor se mostrará en el párrafo.-->
+
+<!DOCTYPE html>
+<html>
+
+<body>
+    <p>Haz Click sobre el botón para capturar el "value" del atributo 'onclick' del elemento botón.</p>
+    <button onclick="Invocalaf()">Pruébalo</button>
+    <p><strong>Nota:</strong> Internet Explorer 8 y anteriores no soportan el método "getNamedItem".</p>
+    <p id="demo"></p>
+    <script>
+
+
+        function Invocalaf() {
+            let parrafo = document.getElementById("demo");
+            let nombreOnClick = document.querySelector("button").getAttribute("onclick"); //saca el valor del onclick -> invocalaf()
+            let nombreAtributo = document.querySelector("button").getAttributeNames("onclick"); // saca el nombre del atributo buscado -> onclick
+
+            let contenido = document.createTextNode(nombreAtributo + ": " + nombreOnClick); //junto las dos variables en una sola 
+                                                                                            //para que sea más fácil de manejar
+            parrafo.appendChild(contenido); //se crea el párrafo
+        }
+
+    </script>
+</body>
+
+</html>

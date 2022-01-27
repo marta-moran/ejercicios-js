@@ -1,0 +1,41 @@
+<!--Sobre un documento HTML en blanco, crear de forma dinámica una tabla de una fila y
+tres columnas. El texto asociado de cada celda será Celda 0, Celda 1 y Celda 2.-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla</title>
+    <style>
+        .tabla, td{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        function crearTabla() {
+            let nodo = document.createElement("table");
+            let fila = document.createElement("tr");
+
+            for (let i = 0; i < 3; i++) {
+                let celda = document.createElement("td"); //creo una celda en cada vuelta del bucle
+                let textoCelda = document.createTextNode("celda " + i); //creo un texto en cada vuelta del bucle
+                celda.appendChild(textoCelda);
+                fila.appendChild(celda);
+            }
+
+            document.body.appendChild(nodo); //incorporo la tabla al documento
+            nodo.appendChild(fila); //incorporo la fila a la tabla (las celdas fueron incorporadas en el bucle a la fila)
+            nodo.setAttribute("class", "tabla");
+
+        }
+
+        crearTabla();
+    </script>
+</body>
+
+</html>

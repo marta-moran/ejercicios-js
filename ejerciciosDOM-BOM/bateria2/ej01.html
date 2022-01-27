@@ -1,0 +1,48 @@
+<!--1.- A partir del siguiente código, desarrollar una función que permita visualizar los hijos del
+elemento padre, añadiendo la información como código html en elemento identificado como
+resultados. Los párrafos deberán pasar a color rojo y el nuevo texto a verde.-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ejercicio 1</title>
+</head>
+
+<body>
+    <div id="padre">
+        <p id="child1">Contenido del parrafo ...</p>
+        <p id="child2">Contenido del parrafo ...</p>
+        <p id="child3">Contenido del parrafo ...</p>
+    </div>
+    <button onclick="obtenerHijos(document.getElementById('padre'))">Obtención de hijos</button>
+    <div id="resultados"></div>
+    <script>
+
+
+        function obtenerHijos(padre) {
+
+            let longitudPadre = document.getElementById("padre").childNodes.length; //longitud del nodo padre
+            let nodoPadre = document.getElementById("padre"); //meto en una variable el nodo para no tener que escribir tanto
+
+            let children = []
+            let valores = []
+
+            //sacar lista de hijos (nombres de nodos y su valor)
+            for(let i =0; i < longitudPadre; i++) {
+                children += nodoPadre.childNodes[i].nodeName + " <br><br>";  //saca el tipo de nodo
+                valores += nodoPadre.childNodes[i].textContent + "<br><br>"; //saca el contenido de los nodos   
+            }
+
+            document.getElementById("resultados").innerHTML = children + valores;
+
+            document.getElementById("resultados").style.color = "green";
+            document.getElementById("padre").style.color = "red";
+            
+        }
+    </script>
+</body>
+
+</html>

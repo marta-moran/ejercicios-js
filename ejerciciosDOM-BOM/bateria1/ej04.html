@@ -1,0 +1,43 @@
+<!--datos NamedNodeMap permita:
+Mediante una función crear un atributo “class” para el párrafo.
+Mediante otra función obtener y visualizar en un alert los atributos del elemento párrafo.
+-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>DOM</title>
+		<style>
+			.claseParrafo {color:red;}
+		</style>
+	</head>
+	<body>
+		<p id='parrafo'>El estilo de este p&aacute;rrafo est&aacute; controlado por los botones.</p>		
+		<button type='button' onclick='crearAtributo();'>Cambiar clase</button>
+		<button type='button' onclick='verAtributos();'>Ver todos los atributos</button>
+        <script>
+
+            var nodeMap;
+            var node;
+            var atributos;
+
+            function crearAtributo() {
+                nodeMap = document.getElementById("parrafo");
+                node = document.createAttribute("class");
+                node.value = "class";
+                nodeMap.attributes.setNamedItem(node);
+
+                atributos = nodeMap.getAttributeNames();
+            }
+
+            function verAtributos() {
+                let valores = []
+                for (let i = 0; i<nodeMap.length; i++) {
+                    valores += nodeMap.getAttribute(atributos[i]);
+                }
+                alert(valores + "\n")
+            }
+            
+		</script>
+	</body>
+</html>
+
