@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Calculadora</title>
+</head>
+<body>
+    <div class="calculator">
+        <input id="operando1" type="text" name="operando"><br><br>
+        <input id="operando2" type="text" name="operando"><br><br>
+        <button name="suma" value = "suma" onclick="calcular(this.value)">+</button> 
+        <button name="resta" value = "resta"  onclick="calcular(this.value)">-</button>
+        <button name="multi" value = "multi" onclick="calcular(this.value)">x</button>
+        <button name="divi" value ="divi"  onclick="calcular(this.value)">/</button><br><br>
+        <input id="resultado" type="text" name="resultado"><br>
+        <input type="button" value = "borrar" onclick="borrar();">
+    </div>
+    <script>
+        let operando1 = document.getElementsByName("operando")[0];
+        let operando2 = document.getElementsByName("operando")[1];
+        let cajaResultado = document.getElementById("resultado");
+
+        function calcular(tecla) {
+
+            operando1Value = parseInt(operando1.value);
+            operando2Value = parseInt(operando2.value);
+            let resultado = 0;
+
+            switch (tecla) {
+                case "suma":
+                    resultado = operando1Value + operando2Value;
+                    break;
+                case "resta":
+                    resultado = operando1Value - operando2Value;
+                    break;
+                case "multi":
+                    resultado = operando1Value * operando2Value;
+                    break;
+                case "divi":
+                    resultado = operando1Value / operando2Value;
+                    break;
+            }
+
+            cajaResultado.value = resultado;
+   
+        }
+
+        function borrar() {
+
+            operando1.value = 0;
+            operando2.value = 0;
+            cajaResultado.value = 0;
+
+        }
+    </script>
+</body>
+</html>

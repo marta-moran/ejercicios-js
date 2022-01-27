@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label for="">Nombre </label><input type = "text"  id = "nombreDetenido" name = "nombre"><br><br>
+    <label for="">Apellido </label><input type= "text" id = "apellidoDetenido" name = "apellido"><br><br>
+    <label for="">DNI </label><input type = "text" id ="dniDetenido" name = "dni" maxlength="10"><br><br>
+    <input type="file" id = "imagenDetenido" name = "foto"><br><br>
+
+    <button id="add" name="add" value="añadir" onclick="add()">Añadir</button>
+    <button id="buscarDetenido" name="consultar" value="consultar" onclick="search()">Consultar</button>
+    <button id="lista" name="listar" value="verDni" onclick="listar(this.value)">Ver Dni</button>
+    <button id="lista" name="listar" value="VerDetenidos" onclick="listar(this.value)">Ver detenidos</button><br><br>
+    <textarea id="textarea" cols = "30" rows="15"></textarea>
+
+
+    <script>
+
+        var detenidos = [] 
+
+        function Persona(nombre, apellido, dni, imagen) {
+            this.nombre = nombre;
+            this.apellido = apellido;
+            this.dni = dni;
+            this.imagen = imagen;
+        }
+
+        var detenido1 = new Persona ("Marta", "Morán", "1", "https://www.hogarmania.com/archivos/201709/conejo-pequeno-668x400x80xX.jpg");
+        var detenido2 = new Persona ("Pablo", "Llorente", "2", "https://pbs.twimg.com/media/EJa2cpeWkAAN-th?format=jpg&name=900x900");
+        var detenido3 = new Persona ("José", "Muñoz", "3", "https://as01.epimg.net/mexico/imagenes/2019/01/19/tikitakas/1547933521_851367_1547933683_noticia_normal_recorte1.jpg");
+        var detenido4 = new Persona ("Sara", "Martínez", "4", "https://i.pinimg.com/236x/14/50/fd/1450fdf1258d667ebe320036e1287312--pretty-baby-little-babies.jpg");
+        var detenido5 = new Persona ("Ana", "Suárez", "5", "https://static.nationalgeographic.es/files/styles/image_3200/public/NationalGeographic_2697714.jpg?w=1600&h=900");
+
+        detenidos.push(detenido1);
+        detenidos.push(detenido2);
+        detenidos.push(detenido3);
+        detenidos.push(detenido4);
+        detenidos.push(detenido5);
+
+        function add () {
+            let nombre = document.getElementsByTagName("input")[0].value;
+            let apellido = document.getElementsByTagName("input")[1].value;
+            let dni = document.getElementsByTagName("input")[2].value;
+            let imagen = document.getElementsByTagName("input")[3].value;
+            let cogido = false;
+
+        for(let persona of detenidos) {
+            if (persona.dni == dni) {
+                cogido = true;
+                alert("Ese dni ya está en uso");
+                limpiar();
+                break;
+            }
+        }
+        
+        if (cogido == false) {
+            var nuevoDetenido = new Persona(nombre, apellido, dni, imagen);
+            detenidos.push(nuevoDetenido);
+            console.log(detenidos);
+        }
+           
+    }
+        
+        function listar(opcion) {
+            
+            switch (opcion) {
+                case "verDni":
+                    let cajaTexto="";
+                    for(let persona of detenidos) {
+                        cajaTexto+="DNI: " + persona.dni + " APELLIDO: " + persona.apellido + "\n";
+                    }
+                    document.getElementById('textarea').value = cajaTexto; 
+                    break;
+            
+                case "verDetenidos":
+                    document.write(`<br><br> <b>PERSONAS DETENIDAS:</b>`);
+                    for(let persona of detenidos) {
+                    document.write(`<br><br>Nombre ${persona.nombre} <br> Apellido:  ${persona.apellido} <br><br> Foto: <img src=${persona.imagen} style="width: 10%;height:auto;">`);
+                }
+                    break;
+            }
+            
+          
+
+        }
+
+        function search() {
+
+            let nom = document.getElementById("nombreDetenido").value;
+            //nom = nom.toLowerCase();
+            let apellido = document.getElementById("apellidoDetenido").value;
+            let dni = document.getElementById("dniDetenido").value;
+            let img = document.getElementById("imagenDetenido").value;
+            let detenido = false;
+
+
+            for (let persona of detenidos) {
+                if (persona.nombre.toLowerCase() == nom || persona.apellido.toLowerCase() == apellido) {
+                    document.write(`${persona.nombre}  ${persona.apellido} está detenido/a <br>`);
+                    detenido = true;
+                } 
+            }  
+
+            if (!detenido) {
+                    alert("esa persona no está detenida");
+                    limpiar();
+                }
+ /*
+             2º manera
+            for(let i = 0; i < detenidos.length; i++) {
+                if (detenidos[i].nombre == nom) {
+                    document.write(`${nom} está detenido/a`)
+                }
+            } */
+        }
+
+        function limpiar(){
+            
+            for(var i=0; i<5; i++){
+                document.getElementsByTagName("input")[i].value = "";
+            }
+        }
+
+    </script>
+</body>
+</html>

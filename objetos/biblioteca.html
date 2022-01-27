@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
+        body {
+            font-size: 20px;
+            font-family: 'Montserrat', sans-serif;
+
+        }
+    </style>
+</head>
+
+<body>
+    <label for="">Título </label><input type="text" id="tit" name="titulo"><br><br>
+    <label for="">Autor </label><input type="text" id="aut" name="autor"><br><br>
+    <label for="">Editorial </label><input type="text" id="edit" name="editorial"><br><br>
+    <label for="">Año de publicación </label><input type="text" id="y" name="year"><br><br><br>
+    <button id="add" name="add" value="añadir" onclick="add()">Añadir</button>
+    <button id="busc" name="consultar" value="consultar" onclick="search()">Consultar</button>
+ 
+    <script>
+
+        var contador = 1;
+        var biblioteca = [];
+
+        function Libro(titulo, autor, editorial, year) {
+            this.titulo = titulo;
+            this.autor = autor;
+            this.editorial = editorial
+            this.year = year;
+            this.id = contador++;
+        }
+
+        function add() {
+
+            const titulo = document.getElementById("tit").value;
+            const autor = document.getElementById("aut").value;
+            const editorial = document.getElementById("edit").value;
+            const year = parseInt(document.getElementById("y").value);
+
+            const nuevoEjemplar = new Libro(titulo, autor, editorial, year);
+
+            biblioteca.push(nuevoEjemplar);
+            alert("Has añadido " + nuevoEjemplar.titulo);
+            console.log(biblioteca);
+
+            //para borrar después de introducir
+            for(let i = 0; i<5; i++) {
+            document.getElementsByTagName("input")[i].value = "";
+            }
+
+        }
+
+        function search() { 
+            //para buscar por cualquiera de los campos
+            const titulo = document.getElementById("tit").value; //mediante un nametag(input) capturar lo que introduce el usuario y compararlo con titulo, autor, editorial... y si encaja con alguno ese es. 
+            const autor = document.getElementById("aut").value;
+            const editorial = document.getElementById("edit").value;
+            const year = document.getElementById("y").value;
+            
+            
+            for(let libro of biblioteca) { //probar un switch
+                if (libro.titulo == titulo || libro.autor == autor || libro.editorial == editorial || libro.year == year) {
+                    document.write(`Titulo:  ${libro.titulo} <br> Autor: ${libro.autor} <br> Editorial: ${libro.editorial} <br> Año: ${libro.year} <br>`)
+                }
+            }
+            
+        }
+
+        /*function borrar() {
+
+           for(let i = 0; i<5; i++) {
+            document.getElementsByTagName("input")[i].value = "";
+            }
+    
+    
+        }*/
+
+
+    </script>
+</body>
+
+</html>
+
