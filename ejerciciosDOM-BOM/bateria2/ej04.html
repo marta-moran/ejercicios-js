@@ -21,9 +21,6 @@
         //para crear el select
         let select = document.createElement("select");
 
-      
-        //crear un name para el select
-
         let option1 = document.createElement("option");
         let option2 = document.createElement("option");
         let option3 = document.createElement("option");
@@ -49,6 +46,7 @@
 
         document.body.appendChild(select);
 
+        //se debe crear el name cuando ya exista el elemento en el documento
         let selectAtt = document.getElementsByTagName("select")[0];
         selectAtt.setAttribute("name", "opciones");
     }
