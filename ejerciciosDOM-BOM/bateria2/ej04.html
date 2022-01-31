@@ -37,8 +37,8 @@
         option4.appendChild(text4);
 
         let opciones = [option1, option2, option3, option4];
-        console.log(opciones)
         
+        //name con for recorriendo el array opciones para ahorrar código
         for(let i = 0; i < opciones.length; i++) {
             opciones[i].setAttribute("name", "opcion" + i);
             select.appendChild(opciones[i]);
