@@ -1,0 +1,58 @@
+<!--Crear un select con métodos element-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select y métodos element</title>
+</head>
+<body>
+<script>
+    function crear(){
+
+        //para crear el label
+        let label = document.createElement("label", "Elige una opción: ");
+        let text = document.createTextNode("Elige una opción: ");
+
+        label.appendChild(text);
+        document.body.appendChild(label);
+
+        //para crear el select
+        let select = document.createElement("select");
+
+      
+        //crear un name para el select
+
+        let option1 = document.createElement("option");
+        let option2 = document.createElement("option");
+        let option3 = document.createElement("option");
+        let option4 = document.createElement("option");
+
+        let text1 = document.createTextNode("Opción 1");
+        let text2 = document.createTextNode("Opción 2");
+        let text3 = document.createTextNode("Opción 3");
+        let text4 = document.createTextNode("Opción 4");
+
+        option1.appendChild(text1);
+        option2.appendChild(text2);
+        option3.appendChild(text3);
+        option4.appendChild(text4);
+
+        let opciones = [option1, option2, option3, option4];
+        console.log(opciones)
+        
+        for(let i = 0; i < opciones.length; i++) {
+            opciones[i].setAttribute("name", "opcion" + i);
+            select.appendChild(opciones[i]);
+        }
+
+        document.body.appendChild(select);
+
+        let selectAtt = document.getElementsByTagName("select")[0];
+        selectAtt.setAttribute("name", "opciones");
+    }
+    crear();
+</script>
+</body>
+</html>
