@@ -1,0 +1,50 @@
+<!--
+Desarrollar el código javascript que permita:
+1. Definir el oyente de evento para cada caja de texto de manera que permita controlar el teclado.
+2. Si estando en la caja Nombre, se presiona la tecla “Intro”, código ASCII 13, el foco pasará a contraseña.
+3. Si estando en la caja Contraseña se presiona “Intro”, se invocará una función llamada “Transmisión” y que lo único que haga se mostrar un mensaje “Iniciando transmisión”.  
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>Nombre</p><input type="text" id="nombre">
+    <p>Contraseña</p><input type="text" id="clave">
+    <p>Mensaje del servidor</p>
+    <textarea cols="40" rows="16"></textarea>
+    <script>
+
+        const controlNombre = document.getElementsByTagName("input")[0];
+        const controlClave = document.getElementsByTagName("input")[1];
+        const controlTextarea = document.getElementsByTagName("textarea")[0];
+
+        function enterUser(event){
+            if(event.key == "Enter"){
+                controlClave.focus();
+            }
+        }
+
+        function iniciarTransmision(event) {
+            if(event.key == "Enter"){
+                let texto = "Incio de transmision..."
+                controlTextarea.value = texto + "\n";
+                controlTextarea.value += controlNombre.value + "\n";
+                controlTextarea.value += controlClave.value + "\n";
+            }
+        }
+
+        controlNombre.addEventListener("keydown", enterUser);
+        controlClave.addEventListener("keydown", iniciarTransmision);
+
+    </script>
+</body>
+
+</html>

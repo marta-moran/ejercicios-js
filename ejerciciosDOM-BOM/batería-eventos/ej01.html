@@ -1,0 +1,42 @@
+<!--Crear una página con un botón y una caja de texto.
+Definir oyente de evento click para el botón. Controlar el evento readystateChange del objeto document.
+En la caja de texto se mostrará el número de veces que se hace click sobre el botón.-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <label for="veces">Veces pulsadas</label>
+    <input type="text" name="nveces" id="caja"><br><br>
+    <button id="boton">Click</button>
+    <script>
+        function nVeces(evento) {
+            const boton = document.getElementById("boton");
+            let contador = 0;
+            if (document.readyState == "complete") {
+                boton.addEventListener('click', function () {
+                    contador++;
+                    document.getElementById("caja").value = contador;
+                }, false);
+            }
+        }
+        //Se llama a la función numeroVeces con addEeventListener
+        document.addEventListener('readystatechange', nVeces, false);
+
+        
+        setTimeout(() => alert("hola"), 2000);
+        setInterval(() => {
+            alert("soy un set interval");
+        }, 5000);
+
+    </script>
+</body>
+
+</html>

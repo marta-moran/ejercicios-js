@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Cabecera</h1>
+    <form id="formu">
+        Usuario <input type="text" id="usuario"><br><br>
+        Clave <input type="password" id="clave"><br><br>
+        <button>Enviar</button>
+    </form>
+    <script>
+        const titulo = document.querySelector("h1");
+
+        function clickTitulo(){
+            console.log("Esto es un titulo");
+        }
+        titulo.addEventListener("click", clickTitulo );
+
+        document.addEventListener("DOMContentLoaded", () => { //solo indica que se ha cargado el html (no imgs, videos...)
+            console.log("El documento se ha cargado");
+        })
+
+
+
+        const formulario = document.getElementById("formu");
+        
+        function enviarFormulario(evento) {
+            evento.preventDefault(); //que no haga nada nativo, que se comporte como yo quiero
+            console.log(evento);
+
+            //doy un placeholder al usuario => 1. creo el atributo 2. le doy valor 3. lo añado al elemento
+            let att1 =  document.createAttribute("placeholder");
+            att1.value = "usuario";
+            
+            /*puedo usar el event.target.(id, name) como sustituto del document.getElement(s)By...*/
+            evento.target.usuario.setAttributeNode(att1); 
+
+            let att2 = document.createAttribute("placeholder");
+            att2.value = "clave";
+
+            evento.target.clave.setAttributeNode(att2);
+
+            alert(evento.target.usuario.value + " y " + evento.target.clave.value) //obtengo los valores que he metido en el formulario
+            
+        }
+
+        formulario.addEventListener('submit', enviarFormulario);
+
+    </script>
+</body>
+</html>
