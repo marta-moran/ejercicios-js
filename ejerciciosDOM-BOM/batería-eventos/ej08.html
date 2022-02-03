@@ -1,0 +1,67 @@
+<!--Crear un documento HTML inicialmente vacío, pero que al terminar de generar el DOM 
+    inserte dinámicamente en el body una tabla de 5x5 celdas y mediante eventos, 
+    alterne el color de fondo de estas celdas cada vez que el usuario haga clic sobre ellas.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla y colores</title>
+    <style>
+        td {
+            border: 1px solid black;
+            height: 50px;
+            width: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", () => { //compruebo que el DOM se haya cargado y ejecuto los eventos
+            crearTabla();
+            asignarEvento();
+        })
+
+        var tabla = document.createElement("table");
+        var fila = document.createElement("tr");
+        var celda = document.createElement("td");
+
+        function crearTabla() {
+            for (let i = 0; i < 5; i++) {
+                fila.appendChild(celda.cloneNode(true)); //es necesario el cloneNode, si hago el createElement aquí dará problemas
+            }
+
+            for (let i = 0; i < 5; i++) {
+                tabla.appendChild(fila.cloneNode(true));
+            }
+
+            document.body.appendChild(tabla);
+        }
+
+        function asignarEvento() {
+            tabla.addEventListener("click", asignarColor, true); //oyente de evento del click
+        }
+
+        function asignarColor(event) {
+             /*
+             si el evento es de tipo click y el color del elemento es distinto de rojo, 
+             lo cambio a rojo. Si ya es rojo y hago click, cambia a blanco.
+            */
+            if (event.type == "click" && event.target.style.backgroundColor != "red") {
+                event.target.style.backgroundColor = 'red';
+            } else {
+                event.target.style.backgroundColor = 'white';
+            }
+
+
+        }
+    </script>
+</body>
+
+</html>
