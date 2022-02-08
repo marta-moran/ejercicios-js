@@ -1,0 +1,21 @@
+<html>
+
+<head>
+    <title>Ejemplo de parámetro de objeto de evento</title>
+</head>
+
+<body>
+    <p>Para ver las coordinadas del ratón haga clic en cualquier lugar de esta página.</p>
+    <script>
+
+        function coordenadas(event) {
+            let x = event.clientX;
+            let y = event.clientY;
+            alert("X coords: " + x + ", Y coords: " + y);
+        }
+
+        document.addEventListener("click", coordenadas);
+    </script>
+</body>
+
+</html>
