@@ -1,0 +1,45 @@
+<!-- Desarrollar el script que permita controlar, mediante oyentes de evento, 
+    el forward y el back del objeto history.-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-size: 30px;
+            text-align: center;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+    </style>
+</head>
+
+<body>
+    <span>Ir</span>
+    <span>Volver</span>
+    <script>
+        
+
+        var ir = document.getElementsByTagName("span")[0];
+        var volver = document.getElementsByTagName("span")[1];
+
+        function clickIr(event) {
+            window.history.go(1);
+
+        }
+
+        function clickVolver(event) {
+            window.history.go(-1);
+
+        }
+
+        ir.addEventListener("click", clickIr);
+        volver.addEventListener("click", clickVolver);
+
+    </script>
+</body>
+
+</html>
