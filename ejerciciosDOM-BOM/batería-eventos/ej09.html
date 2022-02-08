@@ -1,0 +1,43 @@
+<!--Desarrolla el código que permita cambiar el color de fondo del documento, 
+de blanco a amarillo y viceversa, al hacer click sobre el textarea.
+Igualmente, deberá permitir anular el evento anterior si el ratón se pasa sobre 
+el párrafo. Este hecho se visualizará mediante un alert con el mensaje “evento anulado”.-->
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eliminando oyentes de evento</title>
+</head>
+<body >
+<textarea id='click-target' rows='5' cols='30'></textarea>
+<div>
+<p id='mouse-over-target'>Pasa el mouse sobre este párrafo</p>
+</div>
+<script>
+
+var parrafo = document.querySelector("#mouse-over-target");
+var textarea = document.getElementsByTagName("textarea")[0];
+var body = document.getElementsByTagName("body")[0];
+
+    function color() {
+        if (body.style.backgroundColor != "yellow") {
+            body.style.backgroundColor = "yellow";
+        } else {
+            body.style.backgroundColor = "";
+        }
+    }
+
+    textarea.addEventListener("click", color);
+
+    parrafo.addEventListener("mouseover", () => {
+        textarea.removeEventListener("click", color);
+        alert("evento eliminado");
+    });
+
+   
+</script>
+</body>
+</html>
