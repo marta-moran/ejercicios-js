@@ -11,32 +11,7 @@
 <body>
     <form id='formulario'>
         <label for='comunidad'>Comunidad autónoma: </label>
-        <select id='comunidades'>
-
-            <option>andalucia</option>
-            <option>aragon</option>
-            <option>asturias</option>
-            <option>baleares</option>
-            <option>canarias</option>
-            <option>cantabria</option>
-            <option>castilla la mancha</option>
-            <option>castilla y leon</option>
-            <option>cataluña</option>
-            <option>comunidad Valenciana</option>
-            <option>extremadura</option>
-            <option>galicia</option>
-            <option>la rioja</option>
-            <option>madrid</option>
-            <option>navarra</option>
-            <option>pais vasco</option>
-            <option>murcia</option>
-            <option>ceuta</option>
-            <option>melilla</option>
-
-        </select>
-
-        <!--<button name="boton" id="btn">get</button>-->
-
+        <select id='comunidades'></select>
         <label for='provincias'>Provincias: </label>
         <select id='provincias' name='provincias'>
             <option value='' selected='selected'>--Elija una materia--</option>
@@ -46,46 +21,58 @@
     <p></p>
     <script>
         var parrafo = document.getElementsByTagName("p")[0];
-        var seleccion = document.getElementById("comunidades");
-
+        var selectorComunidad = document.getElementById("comunidades");
+        var datos;
         var xhr = new XMLHttpRequest();
-        //var boton = document.getElementById("btn");
+
+        xhr.addEventListener('load', function () {
+            datos = JSON.parse(this.responseText);
+            const comunidades = Object.keys(datos)
+            generarComunidades(comunidades);
+
+        });
 
 
-        function generarOpciones(provincias) {
-            console.log(provincias);
+        selectorComunidad.addEventListener('change', function (event) {
+            xhr.open('GET', 'file.json');
+            limpiarComunidades();
+            //event.preventDefault() <- cuando haya boton
+            let provincias = datos[selectorComunidad.value];
+            generarProvincias(provincias);
+        })
+
+        document.addEventListener('DOMContentLoaded', () => {
+            xhr.open('GET', 'file.json');
+            xhr.send();
+        });
+
+        function limpiarComunidades() {
+            document.getElementById("provincias").innerHTML = "";
+        }
+
+        function generarComunidades(comunidades) {
+           
+
+            for (let i = 0; i < comunidades.length; i++) {
+                const comunidad = comunidades[i];
+                let element = document.createElement("option");
+                element.innerHTML = comunidad;
+                document.getElementById("comunidades").appendChild(element);
+            }
+
+        }
+
+        function generarProvincias(provincias) {
 
             for (let i = 0; i < provincias.length; i++) {
                 const provincia = provincias[i];
                 let element = document.createElement("option");
                 element.innerHTML = provincia;
-                console.log(element);
                 document.getElementById("provincias").appendChild(element);
-
             }
             parrafo.innerHTML = provincias + "<br>";
         }
 
-        xhr.addEventListener('load', function () {
-            let datos = JSON.parse(this.responseText);
-            let provincias = datos[seleccion.value];
-            generarOpciones(provincias);
-        });
-
-
-        seleccion.addEventListener('change', function (event) {
-            xhr.open('GET', 'file.json');
-            //event.preventDefault() <- cuando haya boton
-            limpiar();
-            xhr.send();
-
-        })
-
-        function limpiar() {
-            document.getElementById("provincias").innerHTML = "";
-
-
-        }
 
 
     </script>
