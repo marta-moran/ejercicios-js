@@ -1,0 +1,46 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+	<form>
+		<table>
+			<tr>
+				<td>Nombre de usuario:</td>
+				<td><input type="text" name="Nombre" id="caja"></td>
+				<td><a href="#" id="enlace">Comprobar disponibilidad</a></td>
+			</tr>
+		</table>
+	</form>
+	<div id="result">
+		<!-- para ir añadiendo los logins que se meten en la caja de texto -->
+
+	</div>
+	<script>
+
+		let xhr;
+
+		document.addEventListener('DOMContentLoaded', () => {
+			let comprobarLink = document.getElementById("enlace");
+			comprobarLink.addEventListener("click", respuestaAleatoria);
+		});
+
+		function respuestaAleatoria() {
+			xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function () {
+				if (this.readyState == 4 && this.status == 200) {
+					document.getElementById("result").innerHTML += document.getElementById("caja").value + "<br>";
+					document.getElementById("caja").setAttribute("placeholder", this.responseText);
+					document.getElementById("caja").value = "";
+				}
+			}
+			xhr.open('GET', 'ajax.php');
+			xhr.send();
+		}
+
+
+	</script>
+</body>
+</html>
