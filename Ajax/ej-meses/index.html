@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" name="num">
+    <button id= "consultar "name="consultar">consultar</button>
+	<p></p>
+</body>
+<script>
+    var xhr;
+    var mes;
+    var consultar;
+	var parrafo;
+
+    function enviarPeticionAJAX(evento) {
+				if (mes.value !=''){ //valor.value >
+					console.log(mes);
+					mes.disabled = true;
+					xhr = new XMLHttpRequest();
+					xhr.addEventListener('readystatechange', gestionarRespuesta, false);
+					xhr.open('GET', 'meses.php?num=' + mes.value, true);
+					xhr.send(null);
+				}				
+    }
+
+    function gestionarRespuesta(evento) {
+				if (evento.target.readyState == 4 && evento.target.status == 200) {
+					console.log(evento.target.readyState);
+					mes.disabled = false;
+					consultar.value = evento.target.responseText;
+					parrafo.innerHTML = evento.target.responseText;
+				}
+			}
+
+    document.addEventListener('readystatechange', inicializar, false);
+			function inicializar() {
+				if (document.readyState == 'complete') {
+					mes = document.getElementsByName('num')[0];
+                    consultar = document.getElementsByName('consultar')[0];
+					parrafo = document.getElementsByTagName("p")[0];
+					consultar.addEventListener('click', enviarPeticionAJAX, false);
+				}
+			}
+</script>
+</html>

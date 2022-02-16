@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id='formulario'>
+        <label for='comunidad'>Comunidad autónoma: </label>
+        <select id='comunidades'></select>
+        <label for='provincias'>Provincias: </label>
+        <select id='provincias' name='provincias'>
+            <option value='' selected='selected'>--Elija una materia--</option>
+            <option>----------</option>
+        </select>
+    </form>
+    <p></p>
+    <script>
+        var parrafo = document.getElementsByTagName("p")[0];
+        var selectorComunidad = document.getElementById("comunidades");
+        var datos;
+        var xhr = new XMLHttpRequest();
+
+        xhr.addEventListener('load', function () {
+            datos = JSON.parse(this.responseText);
+            const comunidades = Object.keys(datos)
+            generarComunidades(comunidades);
+
+        });
+
+
+        selectorComunidad.addEventListener('change', function (event) {
+            xhr.open('GET', 'file.json');
+            limpiarComunidades();
+            //event.preventDefault() <- cuando haya boton
+            let provincias = datos[selectorComunidad.value];
+            generarProvincias(provincias);
+        })
+
+        document.addEventListener('DOMContentLoaded', () => {
+            xhr.open('GET', 'file.json');
+            xhr.send();
+        });
+
+        function limpiarComunidades() {
+            document.getElementById("provincias").innerHTML = "";
+        }
+
+        function generarComunidades(comunidades) {
+           
+
+            for (let i = 0; i < comunidades.length; i++) {
+                const comunidad = comunidades[i];
+                let element = document.createElement("option");
+                element.innerHTML = comunidad;
+                document.getElementById("comunidades").appendChild(element);
+            }
+
+        }
+
+        function generarProvincias(provincias) {
+
+            for (let i = 0; i < provincias.length; i++) {
+                const provincia = provincias[i];
+                let element = document.createElement("option");
+                element.innerHTML = provincia;
+                document.getElementById("provincias").appendChild(element);
+            }
+            parrafo.innerHTML = provincias + "<br>";
+        }
+
+
+
+    </script>
+</body>
+
+</html>
