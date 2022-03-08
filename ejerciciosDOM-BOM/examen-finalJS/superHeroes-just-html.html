@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+
+  <title>SUPERHEROES QUE IMPARTEN JUSTICIA</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Faster+One" rel="stylesheet">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+  <header>
+    <h2>ESPERANDO CONEXIÓN A BBDD . . . . . .</h2>
+  </header>
+
+  <section>
+
+  </section>
+
+  <script>
+    let xhr;
+    let p;
+    let datos;
+    document.addEventListener("DOMContenLoaded", () => {
+      console.log("cargado");
+    })
+
+    setTimeout(function () {
+      console.log("funciona");
+      let titulo = document.getElementsByTagName("h2")[0];
+      let header = document.getElementsByTagName("header")[0];
+      header.removeChild(titulo);
+      cargarElementos();
+    }, 3000);
+
+
+    function cargarElementos() {
+      xhr = new XMLHttpRequest();
+      xhr.open("get", "ligajusticia.json");
+
+      xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          let header = document.getElementsByTagName("header")[0];
+          datos = JSON.parse(this.responseText);
+          console.log(datos);
+          let titulo = document.createElement("h1");
+
+          titulo.textContent = datos.squadName;
+
+          header.appendChild(titulo);
+
+          let parrafo = document.createElement("p");
+          parrafo.textContent = "Hometown: " + datos.homeTown + ", Formed: " + datos.formed + ", Secret Base: " + datos.secretBase + ", Active: " + datos.active;
+          header.appendChild(parrafo);
+
+          primerSuperHeroe();
+          segundoSuperHeroe();
+          tercerSuperHeroe();
+
+
+          /*PRIMER SUPERHEROE*/
+          function primerSuperHeroe() {
+
+            let article = document.createElement("article");
+            let section = document.getElementsByTagName("section")[0];
+
+            section.appendChild(article);
+
+            let titulo1 = document.createElement("h2");
+            titulo1.textContent = datos['members'][0]['name'];
+            article.appendChild(titulo1);
+
+
+            let parrafo2 = document.createElement("p");
+            parrafo2.textContent = "Identidad Secreta: " + datos['members'][0]['secretIdentity'];
+            let parrafo3 = document.createElement("p");
+            parrafo3.textContent = "Edad: " + datos['members'][0]['age'];
+            let ul = document.createElement("ul");
+
+            article.appendChild(parrafo2);
+            article.appendChild(parrafo3);
+            article.appendChild(ul);
+
+
+            let poderes = datos['members'][0]['powers'];
+
+            for (let i = 0; i < poderes.length; i++) {
+              const element = poderes[i];
+              let li = document.createElement("li");
+              li.textContent = element;
+              ul.appendChild(li);
+
+            }
+          }
+
+          /*SEGUNDO SUPERHERÓE*/
+
+          function segundoSuperHeroe() {
+
+            let article = document.createElement("article");
+            let section = document.getElementsByTagName("section")[0];
+
+            section.appendChild(article);
+
+            let titulo1 = document.createElement("h2");
+            titulo1.textContent = datos['members'][1]['name'];
+            article.appendChild(titulo1);
+
+
+            let parrafo2 = document.createElement("p");
+            parrafo2.textContent = "Identidad Secreta: " + datos['members'][1]['secretIdentity'];
+            let parrafo3 = document.createElement("p");
+            parrafo3.textContent = "Edad: " + datos['members'][1]['age'];
+
+            let ul = document.createElement("ul");
+
+            article.appendChild(parrafo2);
+            article.appendChild(parrafo3);
+            article.appendChild(ul);
+
+            let poderes = datos['members'][1]['powers'];
+
+            for (let i = 0; i < poderes.length; i++) {
+              const element = poderes[i];
+              let li = document.createElement("li");
+              li.textContent = element;
+              ul.appendChild(li);
+
+            }
+          }
+
+          /*TERCER SUPERHÉROE*/
+
+          function tercerSuperHeroe() {
+
+            let article = document.createElement("article");
+            let section = document.getElementsByTagName("section")[0];
+
+            section.appendChild(article);
+
+            let titulo1 = document.createElement("h2");
+            titulo1.textContent = datos['members'][2]['name'];
+            article.appendChild(titulo1);
+
+
+            let parrafo2 = document.createElement("p");
+            parrafo2.textContent = "Identidad Secreta: " + datos['members'][2]['secretIdentity'];
+            let parrafo3 = document.createElement("p");
+            parrafo3.textContent = "Edad: " + datos['members'][2]['age'];
+
+            let ul = document.createElement("ul");
+
+
+            article.appendChild(parrafo2);
+            article.appendChild(parrafo3);
+            article.appendChild(ul);
+
+            let poderes = datos['members'][2]['powers'];
+
+            for (let i = 0; i < poderes.length; i++) {
+              const element = poderes[i];
+              let li = document.createElement("li");
+              li.textContent = element;
+              ul.appendChild(li);
+
+            }
+          }
+        }
+      }
+      xhr.send(null);
+    }
+  </script>
+</body>
+
+</html>
